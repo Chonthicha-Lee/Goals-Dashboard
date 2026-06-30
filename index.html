@@ -135,6 +135,97 @@
     .row { grid-template-columns: 1fr !important; }
     .kpi-grid, .roadmap-cols, .two-col { grid-template-columns: repeat(2, 1fr); }
   }
+
+  /* Calendar */
+  .cal-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .cal-tab { font-size: 12px; font-weight: 500; padding: 6px 16px; border-radius: 99px; border: 1px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; }
+  .cal-tab.active { background: var(--amber); border-color: var(--amber); color: #4a2f06; }
+  .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .cal-nav-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+  .cal-nav-btn:hover { background: var(--bg); }
+  .cal-label { font-size: 14px; font-weight: 700; }
+  .cal-view { display: none; }
+  .cal-view.active { display: block; }
+
+  /* Daily planner */
+  .planner-pink { --pp-bg: #fdeef3; --pp-card: #fffafb; --pp-border: #e8b4c8; --pp-text: #8a3b58; --pp-muted: #c98aa3; }
+  .planner-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .planner-card { background: var(--pp-card); border: 1.5px solid var(--pp-border); border-radius: 14px; padding: 12px 14px; position: relative; }
+  .planner-card-title { font-size: 13px; font-weight: 700; color: var(--pp-text); margin-bottom: 10px; text-align: center; }
+  .planner-bow { position: absolute; top: -8px; font-size: 14px; }
+  .planner-bow.l { left: 10px; }
+  .planner-bow.r { right: 10px; }
+  .mood-row { display: flex; justify-content: space-around; font-size: 22px; }
+  .mood-row span { cursor: pointer; opacity: 0.45; transition: opacity 0.15s, transform 0.15s; }
+  .mood-row span.sel { opacity: 1; transform: scale(1.2); }
+  .planner-dow { display: flex; gap: 4px; justify-content: center; margin-top: 8px; }
+  .planner-dow span { width: 22px; height: 22px; border: 1px solid var(--pp-border); border-radius: 50%; font-size: 10px; color: var(--pp-muted); display: flex; align-items: center; justify-content: center; }
+  .planner-dow span.sel { background: var(--pp-border); color: #fff; }
+  .planner-date-input { width: 100%; text-align: center; border: none; border-bottom: 1px solid var(--pp-border); font-size: 13px; color: var(--pp-text); padding: 4px 0; background: transparent; font-weight: 700; }
+  .weather-row { display: flex; justify-content: space-around; font-size: 18px; }
+  .weather-row span { cursor: pointer; opacity: 0.4; }
+  .weather-row span.sel { opacity: 1; }
+  .water-row { display: flex; justify-content: space-around; font-size: 18px; margin-bottom: 8px; }
+  .water-row span { cursor: pointer; opacity: 0.3; }
+  .water-row span.filled { opacity: 1; }
+  .planner-input { width: 100%; border: 1px solid var(--pp-border); border-radius: 8px; padding: 5px 8px; font-size: 11px; color: var(--pp-text); margin-top: 6px; background: #fff; }
+  .planner-textarea { width: 100%; height: 70px; border: 1px solid var(--pp-border); border-radius: 8px; padding: 6px 8px; font-size: 11px; color: var(--pp-text); resize: none; background: #fff; }
+  .sleep-stars { display: flex; justify-content: center; gap: 4px; font-size: 18px; margin-bottom: 8px; }
+  .sleep-stars span { cursor: pointer; opacity: 0.3; color: var(--pp-text); }
+  .sleep-stars span.sel { opacity: 1; }
+  .schedule-table { width: 100%; font-size: 10px; border-collapse: collapse; }
+  .schedule-table td { border-bottom: 1px solid var(--pp-bg); padding: 5px 4px; color: var(--pp-text); }
+  .schedule-table td:first-child { width: 50px; color: var(--pp-muted); }
+  .schedule-table input { width: 100%; border: none; background: transparent; font-size: 10px; color: var(--pp-text); outline: none; }
+  .todo-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .todo-row input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--pp-border); flex-shrink: 0; }
+  .todo-row input[type="text"] { flex: 1; border: 1px solid var(--pp-bg); border-radius: 6px; padding: 4px 8px; font-size: 11px; color: var(--pp-text); background: #fff; }
+  .planner-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; color: var(--pp-text); }
+  .planner-2col label { color: var(--pp-muted); font-size: 10px; display: block; margin-bottom: 2px; }
+
+  /* Day view */
+  .day-agenda { display: flex; flex-direction: column; gap: 8px; }
+  .day-slot { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .day-slot:last-child { border-bottom: none; }
+  .day-time { width: 50px; flex-shrink: 0; color: var(--muted); font-weight: 500; }
+  .day-event { background: var(--amber-light); color: #8a5a06; border-radius: 6px; padding: 4px 10px; font-weight: 500; }
+  .day-empty { color: var(--muted); font-style: italic; }
+
+  /* Week view (legacy, unused) */
+  .week-event { background: #fff; border-left: 3px solid var(--amber); border-radius: 3px; padding: 2px 5px; margin-bottom: 3px; font-size: 10px; }
+
+  /* Weekly planner (cat style) */
+  .wp-wrap { --wp-a: #fbd6e6; --wp-b: #f6a8c9; --wp-text: #5c2a3e; --wp-muted: #a8657f; }
+  .wp-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .wp-title { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 28px; font-weight: 700; color: #e85c93; }
+  .wp-month-pill { background: var(--wp-a); border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--wp-text); }
+  .wp-name-pill { background: var(--wp-a); border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--wp-text); flex: 1; min-width: 200px; }
+  .wp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+  .wp-day { border-radius: 14px; padding: 14px; min-height: 150px; position: relative; cursor: pointer; }
+  .wp-day-name { font-size: 12px; font-weight: 700; color: var(--wp-text); letter-spacing: 0.05em; margin-bottom: 8px; }
+  .wp-day-date { font-size: 11px; color: var(--wp-muted); margin-bottom: 8px; }
+  .wp-day-event { background: rgba(255,255,255,0.6); border-radius: 6px; padding: 3px 8px; font-size: 10px; color: var(--wp-text); margin-bottom: 4px; }
+  .wp-cat { position: absolute; bottom: 8px; right: 10px; font-size: 22px; opacity: 0.85; }
+  .wp-notes { background: var(--wp-a); border-radius: 12px; padding: 14px 18px; }
+  .wp-notes-title { font-size: 13px; font-weight: 700; color: var(--wp-text); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .wp-notes textarea { width: 100%; height: 50px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--wp-text); outline: none; }
+
+  /* Month view */
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .month-dow { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 6px; font-weight: 500; }
+  .month-cell { min-height: 64px; border: 1px solid var(--border); border-radius: 6px; padding: 4px 6px; font-size: 11px; color: var(--text); }
+  .month-cell.empty { border-color: transparent; }
+  .month-cell.today { border-color: var(--amber); background: var(--amber-light); }
+  .month-date { font-weight: 600; margin-bottom: 2px; }
+  .month-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); display: inline-block; margin-right: 2px; }
+
+  /* Year view */
+  .year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .year-month { border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+  .year-month-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; text-align: center; }
+  .year-mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+  .year-mini-cell { font-size: 9px; text-align: center; color: var(--muted); padding: 2px 0; border-radius: 3px; }
+  .year-mini-cell.today { background: var(--amber); color: #4a2f06; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -167,6 +258,188 @@
         <p>👤 Report to: <b style="color:var(--text);">Project Development Manager</b></p>
         <p>📍 Location: <b style="color:var(--text);">Head Office, CU Book Center</b></p>
       </div>
+    </div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="card">
+    <div class="card-title">CALENDAR</div>
+    <div class="cal-tabs">
+      <button class="cal-tab" data-view="day" onclick="switchCalView('day')">รายวัน</button>
+      <button class="cal-tab" data-view="week" onclick="switchCalView('week')">รายสัปดาห์</button>
+      <button class="cal-tab active" data-view="month" onclick="switchCalView('month')">รายเดือน</button>
+      <button class="cal-tab" data-view="year" onclick="switchCalView('year')">รายปี</button>
+    </div>
+
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calNav(-1)">‹</button>
+      <div class="cal-label" id="calLabel"></div>
+      <button class="cal-nav-btn" onclick="calNav(1)">›</button>
+    </div>
+
+    <div class="cal-view" id="view-day">
+      <div class="planner-pink planner-grid">
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Mood</div>
+          <div class="mood-row">
+            <span onclick="selectMood(this)">😄</span>
+            <span onclick="selectMood(this)">🙂</span>
+            <span onclick="selectMood(this)">😐</span>
+            <span onclick="selectMood(this)">🙁</span>
+            <span onclick="selectMood(this)">😞</span>
+          </div>
+        </div>
+
+        <div class="planner-card">
+          <div class="planner-card-title">Date</div>
+          <input class="planner-date-input" id="plannerDateInput" readonly />
+          <div class="planner-dow" id="plannerDow"></div>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Weather</div>
+          <div class="weather-row">
+            <span onclick="selectWeather(this)">☀️</span>
+            <span onclick="selectWeather(this)">⛅</span>
+            <span onclick="selectWeather(this)">☁️</span>
+            <span onclick="selectWeather(this)">🌧️</span>
+            <span onclick="selectWeather(this)">❄️</span>
+          </div>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Daily Reflection</div>
+          <textarea class="planner-textarea" placeholder="วันนี้เป็นอย่างไรบ้าง..."></textarea>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Hours of sleep</div>
+          <div class="sleep-stars">
+            <span onclick="selectSleep(this,1)">✦</span><span onclick="selectSleep(this,2)">✦</span><span onclick="selectSleep(this,3)">✦</span><span onclick="selectSleep(this,4)">✦</span><span onclick="selectSleep(this,5)">✦</span><span onclick="selectSleep(this,6)">✦</span><span onclick="selectSleep(this,7)">✦</span>
+          </div>
+          <input class="planner-input" placeholder="How rested I feel" />
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Reminder to</div>
+          <textarea class="planner-textarea" placeholder="สิ่งที่ต้องไม่ลืมวันนี้..."></textarea>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Water</div>
+          <div class="water-row" id="waterRow">
+            <span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span>
+          </div>
+          <input class="planner-input" placeholder="Other drinks" />
+        </div>
+
+        <div class="planner-card" style="grid-row: span 2;">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Schedule</div>
+          <table class="schedule-table">
+            <tr><td>06:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>08:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>10:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>12:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>14:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>16:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>18:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>20:00</td><td><input type="text" placeholder="" /></td></tr>
+          </table>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">To Do</div>
+          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Exercise</div>
+          <div class="planner-2col" style="grid-template-columns:1fr;">
+            <div><label>Workout</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Total minutes</label><input class="planner-input" style="margin-top:0;" /></div>
+          </div>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Money tracker</div>
+          <div class="planner-2col">
+            <div><label>Money in</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>From</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Money out</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>From</label><input class="planner-input" style="margin-top:0;" /></div>
+          </div>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Today I'm grateful for</div>
+          <textarea class="planner-textarea" placeholder="..."></textarea>
+        </div>
+
+        <div class="planner-card">
+          <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+          <div class="planner-card-title">Meal tracker</div>
+          <div class="planner-2col">
+            <div><label>Breakfast</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Lunch</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Dinner</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Snacks</label><input class="planner-input" style="margin-top:0;" /></div>
+          </div>
+        </div>
+
+        <div style="grid-column: span 3; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="planner-card">
+            <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+            <div class="planner-card-title">Notes</div>
+            <textarea class="planner-textarea" style="height:90px;"></textarea>
+          </div>
+
+          <div class="planner-card">
+            <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
+            <div class="planner-card-title">For tomorrow</div>
+            <textarea class="planner-textarea" style="height:90px;"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cal-view" id="view-week">
+      <div class="wp-wrap">
+        <div class="wp-header">
+          <div class="wp-title">Weekly planner</div>
+          <div class="wp-month-pill" id="wpMonth">MONTH:</div>
+          <div class="wp-name-pill">NAME: ชลธิชา ลีลาชัย (มะปราง)</div>
+        </div>
+        <div class="wp-grid" id="weekGrid"></div>
+        <div class="wp-notes">
+          <div class="wp-notes-title">NOTES</div>
+          <textarea placeholder="บันทึกสัปดาห์นี้..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-view active" id="view-month">
+      <div class="month-grid" id="monthGrid"></div>
+    </div>
+
+    <div class="cal-view" id="view-year">
+      <div class="year-grid" id="yearGrid"></div>
     </div>
   </div>
 
@@ -467,5 +740,155 @@
   </div>
 
 </div>
+<script>
+const DOW_TH = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+const MONTH_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const SAMPLE_EVENTS = {
+  '6-30': [{ time: '10:00', title: 'ประชุมทีม Brand Development' }, { time: '14:00', title: 'ส่งสรุปงาน Project แรก' }],
+  '7-1': [{ time: '09:00', title: 'เริ่มงานวันแรก (Onboarding)' }],
+  '7-5': [{ time: '17:00', title: 'Review Dashboard สิ้นเดือน' }],
+};
+
+let calView = 'month';
+let calDate = new Date();
+
+function eventKey(d) { return `${d.getMonth() + 1}-${d.getDate()}`; }
+function isSameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+
+function switchCalView(view) {
+  calView = view;
+  document.querySelectorAll('.cal-tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+  document.querySelectorAll('.cal-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  renderCalendar();
+}
+
+function openDay(year, month, day) {
+  calDate = new Date(year, month, day);
+  switchCalView('day');
+}
+
+function calNav(dir) {
+  if (calView === 'day') calDate.setDate(calDate.getDate() + dir);
+  else if (calView === 'week') calDate.setDate(calDate.getDate() + dir * 7);
+  else if (calView === 'month') calDate.setMonth(calDate.getMonth() + dir);
+  else if (calView === 'year') calDate.setFullYear(calDate.getFullYear() + dir);
+  renderCalendar();
+}
+
+function renderDay() {
+  const dateInput = document.getElementById('plannerDateInput');
+  if (dateInput) dateInput.value = `${calDate.getDate()} ${MONTH_TH[calDate.getMonth()]} ${calDate.getFullYear() + 543}`;
+  const dowEl = document.getElementById('plannerDow');
+  if (dowEl) {
+    const labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const jsDow = calDate.getDay();
+    const mondayFirst = (jsDow + 6) % 7;
+    dowEl.innerHTML = labels.map((l, i) => `<span class="${i === mondayFirst ? 'sel' : ''}">${l}</span>`).join('');
+  }
+}
+
+function selectMood(el) {
+  el.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function selectWeather(el) {
+  el.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function selectSleep(el, n) {
+  const spans = el.parentElement.querySelectorAll('span');
+  spans.forEach((s, i) => s.classList.toggle('sel', i < n));
+}
+
+function toggleWater(el) {
+  el.classList.toggle('filled');
+}
+
+const DOW_FULL_TH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const CATS = ['🐱','🐈','🐈‍⬛','🐈','🐱','🐈‍⬛','🐱'];
+
+function renderWeek() {
+  const start = new Date(calDate);
+  start.setDate(start.getDate() - start.getDay() + 1);
+  const today = new Date();
+  let html = '';
+  for (let i = 0; i < 6; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const events = SAMPLE_EVENTS[eventKey(d)] || [];
+    const bg = i % 2 === 0 ? 'var(--wp-a)' : 'var(--wp-b)';
+    html += `<div class="wp-day" style="background:${bg};${isSameDay(d, today) ? 'outline:2px solid var(--wp-text);' : ''}" onclick="openDay(${d.getFullYear()}, ${d.getMonth()}, ${d.getDate()})">
+      <div class="wp-day-name">${DOW_FULL_TH[d.getDay()].toUpperCase()}</div>
+      <div class="wp-day-date">${d.getDate()} ${MONTH_TH[d.getMonth()]}</div>
+      ${events.map(e => `<div class="wp-day-event">${e.time} ${e.title}</div>`).join('')}
+      <div class="wp-cat">${CATS[i]}</div>
+    </div>`;
+  }
+  document.getElementById('weekGrid').innerHTML = html;
+  const monthEl = document.getElementById('wpMonth');
+  if (monthEl) monthEl.textContent = 'MONTH: ' + MONTH_TH[start.getMonth()];
+}
+
+function renderMonth() {
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const firstDow = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  let html = DOW_TH.map(d => `<div class="month-dow">${d}</div>`).join('');
+  for (let i = 0; i < firstDow; i++) html += '<div class="month-cell empty"></div>';
+  for (let day = 1; day <= daysInMonth; day++) {
+    const d = new Date(year, month, day);
+    const events = SAMPLE_EVENTS[eventKey(d)] || [];
+    html += `<div class="month-cell ${isSameDay(d, today) ? 'today' : ''}" style="cursor:pointer;" onclick="openDay(${year}, ${month}, ${day})">
+      <div class="month-date">${day}</div>
+      ${events.map(() => '<span class="month-dot"></span>').join('')}
+    </div>`;
+  }
+  document.getElementById('monthGrid').innerHTML = html;
+}
+
+function renderYear() {
+  const year = calDate.getFullYear();
+  const today = new Date();
+  let html = '';
+  for (let m = 0; m < 12; m++) {
+    const firstDow = new Date(year, m, 1).getDay();
+    const daysInMonth = new Date(year, m + 1, 0).getDate();
+    let cells = '';
+    for (let i = 0; i < firstDow; i++) cells += '<div></div>';
+    for (let day = 1; day <= daysInMonth; day++) {
+      const d = new Date(year, m, day);
+      cells += `<div class="year-mini-cell ${isSameDay(d, today) ? 'today' : ''}">${day}</div>`;
+    }
+    html += `<div class="year-month"><div class="year-month-title">${MONTH_TH[m]}</div><div class="year-mini-grid">${cells}</div></div>`;
+  }
+  document.getElementById('yearGrid').innerHTML = html;
+}
+
+function renderCalendar() {
+  const label = document.getElementById('calLabel');
+  if (calView === 'day') {
+    label.textContent = `${calDate.getDate()} ${MONTH_TH[calDate.getMonth()]} ${calDate.getFullYear() + 543}`;
+    renderDay();
+  } else if (calView === 'week') {
+    const start = new Date(calDate); start.setDate(start.getDate() - start.getDay());
+    const end = new Date(start); end.setDate(start.getDate() + 6);
+    label.textContent = `${start.getDate()} - ${end.getDate()} ${MONTH_TH[end.getMonth()]} ${end.getFullYear() + 543}`;
+    renderWeek();
+  } else if (calView === 'month') {
+    label.textContent = `${MONTH_TH[calDate.getMonth()]} ${calDate.getFullYear() + 543}`;
+    renderMonth();
+  } else if (calView === 'year') {
+    label.textContent = `ปี ${calDate.getFullYear() + 543}`;
+    renderYear();
+  }
+}
+
+renderCalendar();
+</script>
 </body>
 </html>
