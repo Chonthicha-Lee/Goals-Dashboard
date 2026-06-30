@@ -243,9 +243,14 @@
   .year-mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
   .year-mini-cell { font-size: 9px; text-align: center; color: var(--muted); padding: 2px 0; border-radius: 3px; }
   .year-mini-cell.today { background: var(--amber); color: #4a2f06; font-weight: 700; }
+  .sync-badge { position: fixed; bottom: 14px; right: 14px; background: #fff; border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; font-size: 11px; color: var(--muted); z-index: 50; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .sync-badge.synced { color: var(--green); }
+  .sync-badge.error { color: #a32d2d; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
+<div class="sync-badge" id="syncBadge">กำลังซิงค์...</div>
 <div class="grid-wrap" id="dashboardContent">
 
   <!-- Header row -->
@@ -300,7 +305,7 @@
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Mood</div>
-          <div class="mood-row">
+          <div class="mood-row" data-pf="mood">
             <span onclick="selectMood(this)">😄</span>
             <span onclick="selectMood(this)">🙂</span>
             <span onclick="selectMood(this)">😐</span>
@@ -318,7 +323,7 @@
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Weather</div>
-          <div class="weather-row">
+          <div class="weather-row" data-pf="weather">
             <span onclick="selectWeather(this)">☀️</span>
             <span onclick="selectWeather(this)">⛅</span>
             <span onclick="selectWeather(this)">☁️</span>
@@ -330,64 +335,64 @@
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Daily Reflection</div>
-          <textarea class="planner-textarea" placeholder="วันนี้เป็นอย่างไรบ้าง..."></textarea>
+          <textarea class="planner-textarea" data-pf="reflection" placeholder="วันนี้เป็นอย่างไรบ้าง..."></textarea>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Hours of sleep</div>
-          <div class="sleep-stars">
+          <div class="sleep-stars" data-pf="sleep">
             <span onclick="selectSleep(this,1)">✦</span><span onclick="selectSleep(this,2)">✦</span><span onclick="selectSleep(this,3)">✦</span><span onclick="selectSleep(this,4)">✦</span><span onclick="selectSleep(this,5)">✦</span><span onclick="selectSleep(this,6)">✦</span><span onclick="selectSleep(this,7)">✦</span>
           </div>
-          <input class="planner-input" placeholder="How rested I feel" />
+          <input class="planner-input" data-pf="rested" placeholder="How rested I feel" />
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Reminder to</div>
-          <textarea class="planner-textarea" placeholder="สิ่งที่ต้องไม่ลืมวันนี้..."></textarea>
+          <textarea class="planner-textarea" data-pf="reminder" placeholder="สิ่งที่ต้องไม่ลืมวันนี้..."></textarea>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Water</div>
-          <div class="water-row" id="waterRow">
+          <div class="water-row" id="waterRow" data-pf="water">
             <span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span><span onclick="toggleWater(this)">💧</span>
           </div>
-          <input class="planner-input" placeholder="Other drinks" />
+          <input class="planner-input" data-pf="otherDrinks" placeholder="Other drinks" />
         </div>
 
         <div class="planner-card" style="grid-row: span 2;">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Schedule</div>
           <table class="schedule-table">
-            <tr><td>06:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>08:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>10:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>12:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>14:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>16:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>18:00</td><td><input type="text" placeholder="" /></td></tr>
-            <tr><td>20:00</td><td><input type="text" placeholder="" /></td></tr>
+            <tr><td>06:00</td><td><input type="text" data-pf="sched0" placeholder="" /></td></tr>
+            <tr><td>08:00</td><td><input type="text" data-pf="sched1" placeholder="" /></td></tr>
+            <tr><td>10:00</td><td><input type="text" data-pf="sched2" placeholder="" /></td></tr>
+            <tr><td>12:00</td><td><input type="text" data-pf="sched3" placeholder="" /></td></tr>
+            <tr><td>14:00</td><td><input type="text" data-pf="sched4" placeholder="" /></td></tr>
+            <tr><td>16:00</td><td><input type="text" data-pf="sched5" placeholder="" /></td></tr>
+            <tr><td>18:00</td><td><input type="text" data-pf="sched6" placeholder="" /></td></tr>
+            <tr><td>20:00</td><td><input type="text" data-pf="sched7" placeholder="" /></td></tr>
           </table>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">To Do</div>
-          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
-          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
-          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
-          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
-          <div class="todo-row"><input type="checkbox" /><input type="text" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" data-pf="todoChecked0" /><input type="text" data-pf="todo0" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" data-pf="todoChecked1" /><input type="text" data-pf="todo1" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" data-pf="todoChecked2" /><input type="text" data-pf="todo2" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" data-pf="todoChecked3" /><input type="text" data-pf="todo3" placeholder="" /></div>
+          <div class="todo-row"><input type="checkbox" data-pf="todoChecked4" /><input type="text" data-pf="todo4" placeholder="" /></div>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Exercise</div>
           <div class="planner-2col" style="grid-template-columns:1fr;">
-            <div><label>Workout</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>Total minutes</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Workout</label><input class="planner-input" data-pf="workout" style="margin-top:0;" /></div>
+            <div><label>Total minutes</label><input class="planner-input" data-pf="workoutMin" style="margin-top:0;" /></div>
           </div>
         </div>
 
@@ -395,27 +400,27 @@
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Money tracker</div>
           <div class="planner-2col">
-            <div><label>Money in</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>From</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>Money out</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>From</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Money in</label><input class="planner-input" data-pf="moneyIn" style="margin-top:0;" /></div>
+            <div><label>From</label><input class="planner-input" data-pf="moneyInFrom" style="margin-top:0;" /></div>
+            <div><label>Money out</label><input class="planner-input" data-pf="moneyOut" style="margin-top:0;" /></div>
+            <div><label>From</label><input class="planner-input" data-pf="moneyOutFrom" style="margin-top:0;" /></div>
           </div>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Today I'm grateful for</div>
-          <textarea class="planner-textarea" placeholder="..."></textarea>
+          <textarea class="planner-textarea" data-pf="grateful" placeholder="..."></textarea>
         </div>
 
         <div class="planner-card">
           <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
           <div class="planner-card-title">Meal tracker</div>
           <div class="planner-2col">
-            <div><label>Breakfast</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>Lunch</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>Dinner</label><input class="planner-input" style="margin-top:0;" /></div>
-            <div><label>Snacks</label><input class="planner-input" style="margin-top:0;" /></div>
+            <div><label>Breakfast</label><input class="planner-input" data-pf="mealBreakfast" style="margin-top:0;" /></div>
+            <div><label>Lunch</label><input class="planner-input" data-pf="mealLunch" style="margin-top:0;" /></div>
+            <div><label>Dinner</label><input class="planner-input" data-pf="mealDinner" style="margin-top:0;" /></div>
+            <div><label>Snacks</label><input class="planner-input" data-pf="mealSnacks" style="margin-top:0;" /></div>
           </div>
         </div>
 
@@ -423,13 +428,13 @@
           <div class="planner-card">
             <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
             <div class="planner-card-title">Notes</div>
-            <textarea class="planner-textarea" style="height:90px;"></textarea>
+            <textarea class="planner-textarea" data-pf="dayNotes" style="height:90px;"></textarea>
           </div>
 
           <div class="planner-card">
             <span class="planner-bow l">🎀</span><span class="planner-bow r">🎀</span>
             <div class="planner-card-title">For tomorrow</div>
-            <textarea class="planner-textarea" style="height:90px;"></textarea>
+            <textarea class="planner-textarea" data-pf="forTomorrow" style="height:90px;"></textarea>
           </div>
         </div>
 
@@ -446,7 +451,7 @@
         <div class="wp-grid" id="weekGrid"></div>
         <div class="wp-notes">
           <div class="wp-notes-title">NOTES</div>
-          <textarea placeholder="บันทึกสัปดาห์นี้..."></textarea>
+          <textarea id="wpNotesText" placeholder="บันทึกสัปดาห์นี้..."></textarea>
         </div>
       </div>
     </div>
@@ -464,18 +469,18 @@
         <div class="mp-bottom">
           <div class="mp-panel" style="background:var(--mp-yellow);">
             <div class="mp-panel-title">Priorities:</div>
-            <textarea placeholder="..."></textarea>
+            <textarea id="mpPriorities" placeholder="..."></textarea>
             <span class="mp-panel-deco">🌻</span>
           </div>
           <div class="mp-bottom-right">
             <div class="mp-panel" style="background:var(--mp-pink);">
               <div class="mp-panel-title">Monthly goals:</div>
-              <textarea placeholder="..." style="height:36px;"></textarea>
+              <textarea id="mpGoals" placeholder="..." style="height:36px;"></textarea>
               <span class="mp-panel-deco">🌸</span>
             </div>
             <div class="mp-panel" style="background:var(--mp-purple);">
               <div class="mp-panel-title">Notes:</div>
-              <textarea placeholder="..." style="height:36px;"></textarea>
+              <textarea id="mpNotesPanel" placeholder="..." style="height:36px;"></textarea>
               <span class="mp-panel-deco">🌷</span>
             </div>
           </div>
@@ -796,6 +801,60 @@ const SAMPLE_EVENTS = {
 
 let calView = 'month';
 let calDate = new Date();
+let weekStartKey = '';
+
+const SUPABASE_URL = 'https://ljsdlqyjfqugpwychdwl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_mPE1721ST3L43MQFHMcEWw_k69Dl3EM';
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+let cloudCache = {};
+let cloudReady = false;
+
+function setSyncBadge(state) {
+  const el = document.getElementById('syncBadge');
+  if (!el) return;
+  el.classList.remove('synced', 'error');
+  if (state === 'syncing') { el.textContent = 'กำลังซิงค์...'; }
+  else if (state === 'synced') { el.textContent = '✓ ซิงค์แล้ว'; el.classList.add('synced'); }
+  else if (state === 'error') { el.textContent = '⚠ ออฟไลน์ (บันทึกในเครื่อง)'; el.classList.add('error'); }
+}
+
+async function loadCloudData() {
+  if (!sb) { setSyncBadge('error'); return; }
+  setSyncBadge('syncing');
+  try {
+    const { data, error } = await sb.from('app_storage').select('key, value');
+    if (error) throw error;
+    data.forEach(row => { cloudCache[row.key] = row.value; });
+    cloudReady = true;
+    setSyncBadge('synced');
+    renderCalendar();
+  } catch (e) {
+    setSyncBadge('error');
+  }
+}
+
+function getStore(key) {
+  if (cloudReady && cloudCache[key] !== undefined) return cloudCache[key];
+  try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { return {}; }
+}
+function setStore(key, obj) {
+  localStorage.setItem(key, JSON.stringify(obj));
+  cloudCache[key] = obj;
+  if (sb) {
+    setSyncBadge('syncing');
+    sb.from('app_storage').upsert({ key, value: obj, updated_at: new Date().toISOString() })
+      .then(({ error }) => setSyncBadge(error ? 'error' : 'synced'));
+  }
+}
+function dayKeyFor(d) {
+  return `dp_${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+function monthCellsKeyFor(year, month) {
+  return `mp_cells_${year}-${month}`;
+}
+function monthPanelsKeyFor(year, month) {
+  return `mp_panels_${year}-${month}`;
+}
 
 function eventKey(d) { return `${d.getMonth() + 1}-${d.getDate()}`; }
 function isSameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
@@ -831,25 +890,65 @@ function renderDay() {
     const mondayFirst = (jsDow + 6) % 7;
     dowEl.innerHTML = labels.map((l, i) => `<span class="${i === mondayFirst ? 'sel' : ''}">${l}</span>`).join('');
   }
+  restoreDayData();
 }
 
 function selectMood(el) {
   el.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('sel'));
   el.classList.add('sel');
+  saveDayData();
 }
 
 function selectWeather(el) {
   el.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('sel'));
   el.classList.add('sel');
+  saveDayData();
 }
 
 function selectSleep(el, n) {
   const spans = el.parentElement.querySelectorAll('span');
   spans.forEach((s, i) => s.classList.toggle('sel', i < n));
+  saveDayData();
 }
 
 function toggleWater(el) {
   el.classList.toggle('filled');
+  saveDayData();
+}
+
+function saveDayData() {
+  const grid = document.querySelector('.planner-grid');
+  if (!grid) return;
+  const data = {};
+  grid.querySelectorAll('input[data-pf], textarea[data-pf]').forEach(el => {
+    data[el.dataset.pf] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  const moodSel = grid.querySelector('[data-pf="mood"] .sel');
+  data.moodIndex = moodSel ? [...moodSel.parentElement.children].indexOf(moodSel) : -1;
+  const weatherSel = grid.querySelector('[data-pf="weather"] .sel');
+  data.weatherIndex = weatherSel ? [...weatherSel.parentElement.children].indexOf(weatherSel) : -1;
+  data.sleepCount = grid.querySelectorAll('[data-pf="sleep"] .sel').length;
+  data.waterCount = grid.querySelectorAll('[data-pf="water"] .filled').length;
+  setStore(dayKeyFor(calDate), data);
+}
+
+function restoreDayData() {
+  const grid = document.querySelector('.planner-grid');
+  if (!grid) return;
+  const data = getStore(dayKeyFor(calDate));
+  grid.querySelectorAll('input[data-pf], textarea[data-pf]').forEach(el => {
+    if (data[el.dataset.pf] === undefined) { if (el.type === 'checkbox') el.checked = false; else el.value = ''; return; }
+    if (el.type === 'checkbox') el.checked = !!data[el.dataset.pf];
+    else el.value = data[el.dataset.pf];
+  });
+  const moodSpans = grid.querySelectorAll('[data-pf="mood"] span');
+  moodSpans.forEach((s, i) => s.classList.toggle('sel', i === data.moodIndex));
+  const weatherSpans = grid.querySelectorAll('[data-pf="weather"] span');
+  weatherSpans.forEach((s, i) => s.classList.toggle('sel', i === data.weatherIndex));
+  const sleepSpans = grid.querySelectorAll('[data-pf="sleep"] span');
+  sleepSpans.forEach((s, i) => s.classList.toggle('sel', i < (data.sleepCount || 0)));
+  const waterSpans = grid.querySelectorAll('[data-pf="water"] span');
+  waterSpans.forEach((s, i) => s.classList.toggle('filled', i < (data.waterCount || 0)));
 }
 
 const DOW_FULL_TH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
@@ -875,6 +974,10 @@ function renderWeek() {
   document.getElementById('weekGrid').innerHTML = html;
   const monthEl = document.getElementById('wpMonth');
   if (monthEl) monthEl.textContent = 'MONTH: ' + MONTH_TH[start.getMonth()];
+
+  weekStartKey = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`;
+  const weekData = getStore('wp_notes_' + weekStartKey);
+  document.getElementById('wpNotesText').value = weekData.text || '';
 }
 
 const DOW_EN = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
@@ -913,18 +1016,21 @@ function renderMonth() {
     };
   });
 
+  const cellStore = getStore(monthCellsKeyFor(year, month));
+
   let html = DOW_EN.map(d => `<div class="mp-dow">${d}</div>`).join('');
   for (let i = 0; i < firstDow; i++) html += `<div class="mp-cell empty" style="background:${MP_COLORS[i]};opacity:0.55;"></div>`;
   for (let day = 1; day <= daysInMonth; day++) {
     const d = new Date(year, month, day);
     const dow = d.getDay();
     const events = SAMPLE_EVENTS[eventKey(d)] || [];
-    const noteText = events.map(e => e.title).join(', ');
+    const defaultText = events.map(e => e.title).join(', ');
+    const savedText = cellStore[day] !== undefined ? cellStore[day] : defaultText;
     const dk = decoMap[day];
     const deco = dk ? `<span class="mp-cell-deco ${dk.pos}">${dk.emoji}</span>` : '';
     html += `<div class="mp-cell ${isSameDay(d, today) ? 'today' : ''}" style="background:${MP_COLORS[dow]};">
       <div class="mp-date">${day}</div>
-      <textarea placeholder="">${noteText}</textarea>
+      <textarea placeholder="" data-day="${day}">${savedText}</textarea>
       ${deco}
     </div>`;
   }
@@ -938,7 +1044,43 @@ function renderMonth() {
   const yearEl = document.getElementById('mpYear');
   if (monthEl) monthEl.textContent = 'Month: ' + MONTH_TH[month];
   if (yearEl) yearEl.textContent = 'Year: ' + (year + 543);
+
+  const panels = getStore(monthPanelsKeyFor(year, month));
+  document.getElementById('mpPriorities').value = panels.priorities || '';
+  document.getElementById('mpGoals').value = panels.goals || '';
+  document.getElementById('mpNotesPanel').value = panels.notes || '';
 }
+
+document.addEventListener('input', e => {
+  if (e.target.matches('#monthGrid textarea[data-day]')) {
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    const store = getStore(monthCellsKeyFor(year, month));
+    store[e.target.dataset.day] = e.target.value;
+    setStore(monthCellsKeyFor(year, month), store);
+  }
+  if (e.target.id === 'mpPriorities' || e.target.id === 'mpGoals' || e.target.id === 'mpNotesPanel') {
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    const store = getStore(monthPanelsKeyFor(year, month));
+    store.priorities = document.getElementById('mpPriorities').value;
+    store.goals = document.getElementById('mpGoals').value;
+    store.notes = document.getElementById('mpNotesPanel').value;
+    setStore(monthPanelsKeyFor(year, month), store);
+  }
+  if (e.target.id === 'wpNotesText' && weekStartKey) {
+    setStore('wp_notes_' + weekStartKey, { text: e.target.value });
+  }
+  if (e.target.closest('.planner-grid')) {
+    saveDayData();
+  }
+});
+
+document.addEventListener('change', e => {
+  if (e.target.closest('.planner-grid')) {
+    saveDayData();
+  }
+});
 
 function renderYear() {
   const year = calDate.getFullYear();
@@ -978,6 +1120,7 @@ function renderCalendar() {
 }
 
 renderCalendar();
+loadCloudData();
 </script>
 </body>
 </html>
