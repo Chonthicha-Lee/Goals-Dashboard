@@ -409,8 +409,8 @@
     </div>
   </div>
 
-  <!-- Salary + Learning + Focus + Notes + Next review -->
-  <div class="row" style="grid-template-columns: 1fr 1.1fr 1fr 0.8fr 0.7fr;">
+  <!-- Salary + Learning + Focus + (Notes / Next review) -->
+  <div class="row" style="grid-template-columns: 1fr 1fr 1fr; align-items: stretch;">
     <div class="card">
       <div class="card-title">SALARY TARGET</div>
       <div class="salary-bars">
@@ -418,6 +418,13 @@
         <div class="sal-col"><div class="sal-bar-label">35,000</div><div class="sal-bar" style="height:58%"></div><div class="sal-yr">2027</div></div>
         <div class="sal-col"><div class="sal-bar-label">45,000-50,000</div><div class="sal-bar" style="height:80%"></div><div class="sal-yr">2028</div></div>
         <div class="sal-col"><div class="sal-bar-label">60,000+</div><div class="sal-bar" style="height:100%"></div><div class="sal-yr">2029</div></div>
+      </div>
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:12px;">
+        <div class="card-title amber" style="margin-bottom:10px;">CURRENT FOCUS <span style="font-weight:400">(เดือนนี้)</span></div>
+        <div class="focus-row"><div class="focus-top"><span>✓ ทำความเข้าใจระบบการทำงาน</span><span>80%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:80%"></div></div></div>
+        <div class="focus-row"><div class="focus-top"><span>✓ วางแผน Project แรก</span><span>50%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:50%"></div></div></div>
+        <div class="focus-row"><div class="focus-top"><span>✓ สร้างความสัมพันธ์กับทีมและ Partner</span><span>70%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:70%"></div></div></div>
+        <p class="quote" style="margin-top:8px">"Discipline today, Freedom tomorrow."</p>
       </div>
     </div>
 
@@ -433,34 +440,26 @@
       <div class="learn-row"><span>English for Business</span><span class="stars">★★★★★</span></div>
     </div>
 
-    <div class="card">
-      <div class="card-title amber">CURRENT FOCUS <span style="font-weight:400">(เดือนนี้)</span></div>
-      <div class="focus-row"><div class="focus-top"><span>✓ ทำความเข้าใจระบบการทำงาน</span><span>80%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:80%"></div></div></div>
-      <div class="focus-row"><div class="focus-top"><span>✓ วางแผน Project แรก</span><span>50%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:50%"></div></div></div>
-      <div class="focus-row"><div class="focus-top"><span>✓ สร้างความสัมพันธ์กับทีมและ Partner</span><span>70%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:70%"></div></div></div>
-      <div class="focus-row"><div class="focus-top"><span>✓ เรียนรู้สินค้าและแบรนด์อย่างลึกซึ้ง</span><span>60%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:60%"></div></div></div>
-      <div class="focus-row"><div class="focus-top"><span>✓ พัฒนาทักษะ Presentation</span><span>40%</span></div><div class="focus-bar"><div class="focus-bar-fill" style="width:40%"></div></div></div>
-      <p class="quote" style="margin-top:8px">"Discipline today, Freedom tomorrow."</p>
-    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="card">
+        <div class="card-title">NOTES & REMINDERS</div>
+        <ul class="notes-list">
+          <li>อัปเดต Dashboard ทุกสิ้นเดือน</li>
+          <li>เก็บ Portfolio ทุก Project</li>
+          <li>ขอ Feedback จากหัวหน้าอย่างสม่ำเสมอ</li>
+          <li>สร้าง Impact มากกว่าทำงานตามหน้าที่</li>
+          <li>มุ่งมั่น เรียนรู้ และพัฒนาตัวเองทุกวัน</li>
+        </ul>
+      </div>
 
-    <div class="card">
-      <div class="card-title">NOTES & REMINDERS</div>
-      <ul class="notes-list">
-        <li>อัปเดต Dashboard ทุกสิ้นเดือน</li>
-        <li>เก็บ Portfolio ทุก Project</li>
-        <li>ขอ Feedback จากหัวหน้าอย่างสม่ำเสมอ</li>
-        <li>สร้าง Impact มากกว่าทำงานตามหน้าที่</li>
-        <li>มุ่งมั่น เรียนรู้ และพัฒนาตัวเองทุกวัน</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class="card-title">NEXT REVIEW</div>
-      <div class="next-review-box">
-        <div class="icon">📅</div>
-        <p class="big">Review Dashboard สิ้นเดือน</p>
-        <p class="small">ทุกวันที่ 5 ของเดือนถัดไป</p>
-        <p class="quote">"Small progress every day leads to big results."</p>
+      <div class="card" style="flex:1;">
+        <div class="card-title">NEXT REVIEW</div>
+        <div class="next-review-box">
+          <div class="icon">📅</div>
+          <p class="big">Review Dashboard สิ้นเดือน</p>
+          <p class="small">ทุกวันที่ 5 ของเดือนถัดไป</p>
+          <p class="quote">"Small progress every day leads to big results."</p>
+        </div>
       </div>
     </div>
   </div>
