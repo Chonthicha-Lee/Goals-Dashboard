@@ -210,14 +210,27 @@
   .wp-notes-title { font-size: 13px; font-weight: 700; color: var(--wp-text); margin-bottom: 8px; letter-spacing: 0.05em; }
   .wp-notes textarea { width: 100%; height: 50px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--wp-text); outline: none; }
 
-  /* Month view */
-  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .month-dow { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 6px; font-weight: 500; }
-  .month-cell { min-height: 64px; border: 1px solid var(--border); border-radius: 6px; padding: 4px 6px; font-size: 11px; color: var(--text); }
-  .month-cell.empty { border-color: transparent; }
-  .month-cell.today { border-color: var(--amber); background: var(--amber-light); }
-  .month-date { font-weight: 600; margin-bottom: 2px; }
-  .month-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); display: inline-block; margin-right: 2px; }
+  /* Monthly planner (pastel style) */
+  .mp-wrap { --mp-pink: #fbe2e8; --mp-yellow: #fcefd2; --mp-green: #e6f1da; --mp-blue: #ddeef1; --mp-purple: #ece6f5; --mp-text: #5c5347; position: relative; }
+  .mp-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; position: relative; }
+  .mp-title { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 26px; font-weight: 700; color: #f0728a; line-height: 1.1; }
+  .mp-deco { font-size: 18px; margin-left: 4px; }
+  .mp-pills { display: flex; flex-direction: column; gap: 8px; }
+  .mp-pill { background: var(--mp-blue); border-radius: 99px; padding: 7px 20px; font-size: 12px; font-weight: 600; color: var(--mp-text); min-width: 140px; }
+  .mp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e8e2d8; border-radius: 10px; overflow: hidden; position: relative; }
+  .mp-dow { font-size: 11px; color: var(--mp-text); text-align: center; padding: 8px 0; font-weight: 700; letter-spacing: 0.05em; background: #fffdf9; border-bottom: 1px solid #e8e2d8; }
+  .mp-cell { min-height: 92px; border-right: 1px solid #e8e2d8; border-bottom: 1px solid #e8e2d8; padding: 6px; font-size: 11px; color: var(--mp-text); display: flex; flex-direction: column; position: relative; }
+  .mp-cell.empty { background: #fdfaf4; }
+  .mp-cell.today .mp-date { color: #e0728a; text-decoration: underline; }
+  .mp-date { font-weight: 700; margin-bottom: 4px; }
+  .mp-cell textarea { flex: 1; width: 100%; border: none; background: transparent; resize: none; font-size: 10px; color: var(--mp-text); outline: none; font-family: inherit; }
+  .mp-cell-deco { position: absolute; bottom: 2px; right: 4px; font-size: 12px; opacity: 0.8; pointer-events: none; }
+  .mp-bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; margin-top: 14px; }
+  .mp-panel { border-radius: 14px; padding: 14px 16px; position: relative; overflow: hidden; }
+  .mp-panel-title { font-size: 14px; font-weight: 600; color: var(--mp-text); margin-bottom: 8px; }
+  .mp-panel textarea { width: 100%; height: 70px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--mp-text); outline: none; font-family: inherit; }
+  .mp-panel-deco { position: absolute; bottom: 6px; right: 10px; font-size: 22px; opacity: 0.9; }
+  .mp-bottom-right { display: flex; flex-direction: column; gap: 12px; }
 
   /* Year view */
   .year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -435,7 +448,35 @@
     </div>
 
     <div class="cal-view active" id="view-month">
-      <div class="month-grid" id="monthGrid"></div>
+      <div class="mp-wrap">
+        <div class="mp-header">
+          <div class="mp-title">Monthly<br/>Planner <span class="mp-deco">🦋🦋</span></div>
+          <div class="mp-pills">
+            <div class="mp-pill" id="mpMonth">Month:</div>
+            <div class="mp-pill" id="mpYear">Year:</div>
+          </div>
+        </div>
+        <div class="mp-grid" id="monthGrid"></div>
+        <div class="mp-bottom">
+          <div class="mp-panel" style="background:var(--mp-yellow);">
+            <div class="mp-panel-title">Priorities:</div>
+            <textarea placeholder="..."></textarea>
+            <span class="mp-panel-deco">🌻</span>
+          </div>
+          <div class="mp-bottom-right">
+            <div class="mp-panel" style="background:var(--mp-pink);">
+              <div class="mp-panel-title">Monthly goals:</div>
+              <textarea placeholder="..." style="height:36px;"></textarea>
+              <span class="mp-panel-deco">🌸</span>
+            </div>
+            <div class="mp-panel" style="background:var(--mp-purple);">
+              <div class="mp-panel-title">Notes:</div>
+              <textarea placeholder="..." style="height:36px;"></textarea>
+              <span class="mp-panel-deco">🌷</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="cal-view" id="view-year">
@@ -832,23 +873,40 @@ function renderWeek() {
   if (monthEl) monthEl.textContent = 'MONTH: ' + MONTH_TH[start.getMonth()];
 }
 
+const DOW_EN = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+const MP_COLORS = ['var(--mp-pink)','var(--mp-blue)','var(--mp-yellow)','var(--mp-green)','var(--mp-purple)','var(--mp-pink)','var(--mp-blue)'];
+const MP_FLOWERS = ['🌼','🌸','🌷','🌻','🦋','🐞','🍃'];
+
 function renderMonth() {
   const year = calDate.getFullYear();
   const month = calDate.getMonth();
   const firstDow = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const today = new Date();
-  let html = DOW_TH.map(d => `<div class="month-dow">${d}</div>`).join('');
-  for (let i = 0; i < firstDow; i++) html += '<div class="month-cell empty"></div>';
+  let html = DOW_EN.map(d => `<div class="mp-dow">${d}</div>`).join('');
+  for (let i = 0; i < firstDow; i++) html += `<div class="mp-cell empty" style="background:${MP_COLORS[i]};opacity:0.55;"></div>`;
   for (let day = 1; day <= daysInMonth; day++) {
     const d = new Date(year, month, day);
+    const dow = d.getDay();
     const events = SAMPLE_EVENTS[eventKey(d)] || [];
-    html += `<div class="month-cell ${isSameDay(d, today) ? 'today' : ''}" style="cursor:pointer;" onclick="openDay(${year}, ${month}, ${day})">
-      <div class="month-date">${day}</div>
-      ${events.map(() => '<span class="month-dot"></span>').join('')}
+    const noteText = events.map(e => e.title).join(', ');
+    const deco = day % 4 === 0 ? `<span class="mp-cell-deco">${MP_FLOWERS[day % MP_FLOWERS.length]}</span>` : '';
+    html += `<div class="mp-cell ${isSameDay(d, today) ? 'today' : ''}" style="background:${MP_COLORS[dow]};">
+      <div class="mp-date">${day}</div>
+      <textarea placeholder="">${noteText}</textarea>
+      ${deco}
     </div>`;
   }
+  const totalCells = firstDow + daysInMonth;
+  const remainder = totalCells % 7;
+  if (remainder !== 0) {
+    for (let i = 0; i < 7 - remainder; i++) html += `<div class="mp-cell empty" style="background:${MP_COLORS[(remainder + i) % 7]};opacity:0.55;"></div>`;
+  }
   document.getElementById('monthGrid').innerHTML = html;
+  const monthEl = document.getElementById('mpMonth');
+  const yearEl = document.getElementById('mpYear');
+  if (monthEl) monthEl.textContent = 'Month: ' + MONTH_TH[month];
+  if (yearEl) yearEl.textContent = 'Year: ' + (year + 543);
 }
 
 function renderYear() {
