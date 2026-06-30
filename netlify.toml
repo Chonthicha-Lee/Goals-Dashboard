@@ -1,0 +1,10 @@
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  included_files = ["netlify/functions/dashboard.html"]
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/gate"
+  status = 200
