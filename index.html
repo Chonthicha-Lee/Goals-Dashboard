@@ -237,12 +237,16 @@
   .mp-bottom-right { display: flex; flex-direction: column; gap: 12px; }
 
   /* Year view */
-  .year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .year-month { border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
-  .year-month-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; text-align: center; }
+  .year-wrap { background: #fdf2f6; border-radius: 16px; padding: 1.5rem; position: relative; }
+  .year-title { text-align: center; font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 30px; color: #f3a9c6; letter-spacing: 0.05em; margin-bottom: 18px; }
+  .year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .year-month { background: #fffbfc; border: 1px solid #f6d9e6; border-radius: 12px; padding: 10px 12px; position: relative; }
+  .year-month-deco { position: absolute; top: -10px; right: 8px; font-size: 16px; }
+  .year-month-title { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 700; font-size: 15px; margin-bottom: 8px; text-align: center; color: #e87fa8; }
   .year-mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-  .year-mini-cell { font-size: 9px; text-align: center; color: var(--muted); padding: 2px 0; border-radius: 3px; }
-  .year-mini-cell.today { background: var(--amber); color: #4a2f06; font-weight: 700; }
+  .year-mini-dow { font-size: 8px; text-align: center; color: #e8aec4; font-weight: 700; }
+  .year-mini-cell { font-size: 9px; text-align: center; color: #a8788d; padding: 2px 0; border-radius: 3px; }
+  .year-mini-cell.today { background: #f6c6db; color: #82294a; font-weight: 700; }
   .sync-badge { position: fixed; bottom: 14px; right: 14px; background: #fff; border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; font-size: 11px; color: var(--muted); z-index: 50; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
   .sync-badge.synced { color: var(--green); }
   .sync-badge.error { color: #a32d2d; }
@@ -489,7 +493,10 @@
     </div>
 
     <div class="cal-view" id="view-year">
-      <div class="year-grid" id="yearGrid"></div>
+      <div class="year-wrap">
+        <div class="year-title" id="yearTitle">2026</div>
+        <div class="year-grid" id="yearGrid"></div>
+      </div>
     </div>
   </div>
 
@@ -1082,20 +1089,25 @@ document.addEventListener('change', e => {
   }
 });
 
+const YEAR_DECO = ['🎀','🌸','🦋','🌷','💗','⭐','🎀','🧁','🌸','🦋','💐','☁️'];
+const YEAR_DOW = ['S','M','T','W','T','F','S'];
+
 function renderYear() {
   const year = calDate.getFullYear();
   const today = new Date();
+  const titleEl = document.getElementById('yearTitle');
+  if (titleEl) titleEl.textContent = year + 543;
   let html = '';
   for (let m = 0; m < 12; m++) {
     const firstDow = new Date(year, m, 1).getDay();
     const daysInMonth = new Date(year, m + 1, 0).getDate();
-    let cells = '';
+    let cells = YEAR_DOW.map(d => `<div class="year-mini-dow">${d}</div>`).join('');
     for (let i = 0; i < firstDow; i++) cells += '<div></div>';
     for (let day = 1; day <= daysInMonth; day++) {
       const d = new Date(year, m, day);
       cells += `<div class="year-mini-cell ${isSameDay(d, today) ? 'today' : ''}">${day}</div>`;
     }
-    html += `<div class="year-month"><div class="year-month-title">${MONTH_TH[m]}</div><div class="year-mini-grid">${cells}</div></div>`;
+    html += `<div class="year-month"><span class="year-month-deco">${YEAR_DECO[m]}</span><div class="year-month-title">${MONTH_TH[m]}</div><div class="year-mini-grid">${cells}</div></div>`;
   }
   document.getElementById('yearGrid').innerHTML = html;
 }
