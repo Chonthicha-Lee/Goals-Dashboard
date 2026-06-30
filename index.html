@@ -206,6 +206,7 @@
   .wp-day-date { font-size: 11px; color: var(--wp-muted); margin-bottom: 8px; }
   .wp-day-event { background: rgba(255,255,255,0.6); border-radius: 6px; padding: 3px 8px; font-size: 10px; color: var(--wp-text); margin-bottom: 4px; }
   .wp-cat { position: absolute; bottom: 8px; right: 10px; font-size: 22px; opacity: 0.85; }
+  .wp-day-input { width: 100%; height: 70px; border: none; background: rgba(255,255,255,0.5); border-radius: 6px; padding: 6px 8px; font-size: 11px; color: var(--wp-text); resize: none; outline: none; font-family: inherit; }
   .wp-notes { background: var(--wp-a); border-radius: 12px; padding: 14px 18px; }
   .wp-notes-title { font-size: 13px; font-weight: 700; color: var(--wp-text); margin-bottom: 8px; letter-spacing: 0.05em; }
   .wp-notes textarea { width: 100%; height: 50px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--wp-text); outline: none; }
@@ -879,6 +880,11 @@ function openDay(year, month, day) {
   switchCalView('day');
 }
 
+function openMonth(year, month) {
+  calDate = new Date(year, month, 1);
+  switchCalView('month');
+}
+
 function calNav(dir) {
   if (calView === 'day') calDate.setDate(calDate.getDate() + dir);
   else if (calView === 'week') calDate.setDate(calDate.getDate() + dir * 7);
@@ -969,12 +975,18 @@ function renderWeek() {
   for (let i = 0; i < 6; i++) {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
+    const y = d.getFullYear();
+    const m = d.getMonth();
+    const day = d.getDate();
     const events = SAMPLE_EVENTS[eventKey(d)] || [];
+    const defaultText = events.map(e => e.title).join(', ');
+    const cellStore = getStore(monthCellsKeyFor(y, m));
+    const savedText = cellStore[day] !== undefined ? cellStore[day] : defaultText;
     const bg = i % 2 === 0 ? 'var(--wp-a)' : 'var(--wp-b)';
-    html += `<div class="wp-day" style="background:${bg};${isSameDay(d, today) ? 'outline:2px solid var(--wp-text);' : ''}" onclick="openDay(${d.getFullYear()}, ${d.getMonth()}, ${d.getDate()})">
+    html += `<div class="wp-day" style="background:${bg};${isSameDay(d, today) ? 'outline:2px solid var(--wp-text);' : ''}">
       <div class="wp-day-name">${DOW_FULL_TH[d.getDay()].toUpperCase()}</div>
-      <div class="wp-day-date">${d.getDate()} ${MONTH_TH[d.getMonth()]}</div>
-      ${events.map(e => `<div class="wp-day-event">${e.time} ${e.title}</div>`).join('')}
+      <div class="wp-day-date">${d.getDate()} ${MONTH_TH[m]}</div>
+      <textarea class="wp-day-input" data-day="${day}" data-year="${y}" data-month="${m}">${savedText}</textarea>
       <div class="wp-cat">${CATS[i]}</div>
     </div>`;
   }
@@ -1059,9 +1071,9 @@ function renderMonth() {
 }
 
 document.addEventListener('input', e => {
-  if (e.target.matches('#monthGrid textarea[data-day]')) {
-    const year = calDate.getFullYear();
-    const month = calDate.getMonth();
+  if (e.target.matches('#monthGrid textarea[data-day]') || e.target.matches('#weekGrid textarea[data-day]')) {
+    const year = e.target.dataset.year ? parseInt(e.target.dataset.year, 10) : calDate.getFullYear();
+    const month = e.target.dataset.month ? parseInt(e.target.dataset.month, 10) : calDate.getMonth();
     const store = getStore(monthCellsKeyFor(year, month));
     store[e.target.dataset.day] = e.target.value;
     setStore(monthCellsKeyFor(year, month), store);
@@ -1107,7 +1119,7 @@ function renderYear() {
       const d = new Date(year, m, day);
       cells += `<div class="year-mini-cell ${isSameDay(d, today) ? 'today' : ''}">${day}</div>`;
     }
-    html += `<div class="year-month"><span class="year-month-deco">${YEAR_DECO[m]}</span><div class="year-month-title">${MONTH_TH[m]}</div><div class="year-mini-grid">${cells}</div></div>`;
+    html += `<div class="year-month" style="cursor:pointer;" onclick="openMonth(${year}, ${m})"><span class="year-month-deco">${YEAR_DECO[m]}</span><div class="year-month-title">${MONTH_TH[m]}</div><div class="year-mini-grid">${cells}</div></div>`;
   }
   document.getElementById('yearGrid').innerHTML = html;
 }
