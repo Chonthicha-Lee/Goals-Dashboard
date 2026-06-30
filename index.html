@@ -30,6 +30,14 @@
   .header .logo { font-size: 22px; font-weight: 700; }
   .header .title-block h1 { font-size: 20px; font-weight: 700; }
   .header .title-block p { font-size: 12px; color: #c8c6bd; margin-top: 2px; }
+  .scrapbook-title { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; line-height: 1; margin-bottom: 4px; }
+  .scrapbook-title .word { font-family: Georgia, 'Times New Roman', serif; font-weight: 900; font-size: 26px; padding: 4px 10px; border-radius: 4px; display: inline-block; box-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+  .scrapbook-title .w1 { background: #f7a8c4; color: #c2185b; transform: rotate(-3deg); }
+  .scrapbook-title .w2 { background: #1a1a18; color: #f7a8c4; transform: rotate(2deg); }
+  .scrapbook-title .w3 { background: #f9d6e3; color: #1a1a18; transform: rotate(-1deg); }
+  .scrapbook-title .w4 { background: #e91e8c; color: #fff; transform: rotate(3deg); }
+  .scrapbook-title .w5 { background: #1a1a18; color: #f48fb1; transform: rotate(-2deg); }
+  .scrapbook-title .w6 { background: #f7a8c4; color: #1a1a18; transform: rotate(2deg); }
   .profile-row { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
   .avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--amber); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: #4a2f06; flex-shrink: 0; }
   .profile-info p { font-size: 13px; line-height: 1.5; }
@@ -138,7 +146,7 @@
 </style>
 </head>
 <body>
-<div class="grid-wrap">
+<div class="grid-wrap" id="dashboardContent">
 
   <!-- Header row -->
   <div class="row" style="grid-template-columns: 1.3fr 0.8fr 1fr;">
@@ -148,7 +156,9 @@
       </div>
       <div style="flex:1">
         <div class="title-block">
-          <h1>3 YEARS CAREER PLAN DASHBOARD</h1>
+          <h1 class="scrapbook-title">
+            <span class="word w1">MY</span><span class="word w2">GOALS</span><span class="word w3">FOR</span><span class="word w4">LIFE</span>
+          </h1>
           <p>Roadmap to Manager / Global Opportunity</p>
         </div>
         <div class="profile-row">
