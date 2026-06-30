@@ -211,7 +211,7 @@
   .wp-notes textarea { width: 100%; height: 50px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--wp-text); outline: none; }
 
   /* Monthly planner (pastel style) */
-  .mp-wrap { --mp-pink: #fbe2e8; --mp-yellow: #fcefd2; --mp-green: #e6f1da; --mp-blue: #ddeef1; --mp-purple: #ece6f5; --mp-text: #5c5347; position: relative; }
+  .mp-wrap { --mp-red: #fbdfdf; --mp-yellow: #fcefd2; --mp-pink: #fbe2e8; --mp-green: #e6f1da; --mp-orange: #fce3d2; --mp-blue: #ddeef1; --mp-purple: #ece6f5; --mp-text: #5c5347; position: relative; }
   .mp-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; position: relative; }
   .mp-title { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 26px; font-weight: 700; color: #f0728a; line-height: 1.1; }
   .mp-deco { font-size: 18px; margin-left: 4px; }
@@ -224,12 +224,16 @@
   .mp-cell.today .mp-date { color: #e0728a; text-decoration: underline; }
   .mp-date { font-weight: 700; margin-bottom: 4px; }
   .mp-cell textarea { flex: 1; width: 100%; border: none; background: transparent; resize: none; font-size: 10px; color: var(--mp-text); outline: none; font-family: inherit; }
-  .mp-cell-deco { position: absolute; bottom: 2px; right: 4px; font-size: 12px; opacity: 0.8; pointer-events: none; }
+  .mp-cell-deco { position: absolute; font-size: 14.4px; opacity: 0.8; pointer-events: none; }
+  .mp-cell-deco.pos-br { bottom: 2px; right: 4px; }
+  .mp-cell-deco.pos-bl { bottom: 2px; left: 4px; }
+  .mp-cell-deco.pos-tr { top: 22px; right: 4px; }
+  .mp-cell-deco.pos-tl { top: 22px; left: 4px; }
   .mp-bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; margin-top: 14px; }
   .mp-panel { border-radius: 14px; padding: 14px 16px; position: relative; overflow: hidden; }
   .mp-panel-title { font-size: 14px; font-weight: 600; color: var(--mp-text); margin-bottom: 8px; }
   .mp-panel textarea { width: 100%; height: 70px; border: none; background: transparent; resize: none; font-size: 12px; color: var(--mp-text); outline: none; font-family: inherit; }
-  .mp-panel-deco { position: absolute; bottom: 6px; right: 10px; font-size: 22px; opacity: 0.9; }
+  .mp-panel-deco { position: absolute; bottom: 6px; right: 10px; font-size: 26.4px; opacity: 0.9; }
   .mp-bottom-right { display: flex; flex-direction: column; gap: 12px; }
 
   /* Year view */
@@ -874,8 +878,18 @@ function renderWeek() {
 }
 
 const DOW_EN = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-const MP_COLORS = ['var(--mp-pink)','var(--mp-blue)','var(--mp-yellow)','var(--mp-green)','var(--mp-purple)','var(--mp-pink)','var(--mp-blue)'];
+const MP_COLORS = ['var(--mp-red)','var(--mp-yellow)','var(--mp-pink)','var(--mp-green)','var(--mp-orange)','var(--mp-blue)','var(--mp-purple)'];
 const MP_FLOWERS = ['🌼','🌸','🌷','🌻','🦋','🐞','🍃'];
+const MP_POSITIONS = ['pos-br','pos-bl','pos-tr','pos-tl'];
+
+function seededRandom(seed) {
+  let s = seed % 2147483647;
+  if (s <= 0) s += 2147483646;
+  return function () {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
 
 function renderMonth() {
   const year = calDate.getFullYear();
@@ -883,6 +897,22 @@ function renderMonth() {
   const firstDow = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const today = new Date();
+
+  const rand = seededRandom(year * 100 + month + 1);
+  const dayPool = [];
+  for (let d = 1; d <= daysInMonth; d++) dayPool.push(d);
+  for (let i = dayPool.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [dayPool[i], dayPool[j]] = [dayPool[j], dayPool[i]];
+  }
+  const decoMap = {};
+  dayPool.slice(0, 12).forEach(d => {
+    decoMap[d] = {
+      emoji: MP_FLOWERS[Math.floor(rand() * MP_FLOWERS.length)],
+      pos: MP_POSITIONS[Math.floor(rand() * MP_POSITIONS.length)],
+    };
+  });
+
   let html = DOW_EN.map(d => `<div class="mp-dow">${d}</div>`).join('');
   for (let i = 0; i < firstDow; i++) html += `<div class="mp-cell empty" style="background:${MP_COLORS[i]};opacity:0.55;"></div>`;
   for (let day = 1; day <= daysInMonth; day++) {
@@ -890,7 +920,8 @@ function renderMonth() {
     const dow = d.getDay();
     const events = SAMPLE_EVENTS[eventKey(d)] || [];
     const noteText = events.map(e => e.title).join(', ');
-    const deco = day % 4 === 0 ? `<span class="mp-cell-deco">${MP_FLOWERS[day % MP_FLOWERS.length]}</span>` : '';
+    const dk = decoMap[day];
+    const deco = dk ? `<span class="mp-cell-deco ${dk.pos}">${dk.emoji}</span>` : '';
     html += `<div class="mp-cell ${isSameDay(d, today) ? 'today' : ''}" style="background:${MP_COLORS[dow]};">
       <div class="mp-date">${day}</div>
       <textarea placeholder="">${noteText}</textarea>
