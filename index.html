@@ -657,39 +657,108 @@
     <div class="hub-panel" id="hub-money">
       <div style="margin-top:16px;">
         <div class="hub-section-title">💰 Money Tracker</div>
-        <div class="hub-grid">
-          <div class="hub-card">
-            <h4>💵 รายรับเดือนนี้</h4>
-            <table class="hub-table">
-              <tr><th>แหล่งรายได้</th><th>จำนวน (฿)</th></tr>
-              <tr><td><input type="text" placeholder="เงินเดือน" /></td><td><input type="text" placeholder="25,000" /></td></tr>
-              <tr><td><input type="text" placeholder="Affiliate" /></td><td><input type="text" placeholder="0" /></td></tr>
-              <tr><td><input type="text" placeholder="อื่นๆ" /></td><td><input type="text" /></td></tr>
-            </table>
+
+        <!-- สรุปยอดรวม (top summary) -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+          <div class="hub-card" style="text-align:center;background:#e6f1da;">
+            <div style="font-size:11px;color:#3b5e10;font-weight:700;margin-bottom:4px;">💵 รายรับรวม</div>
+            <div style="font-size:22px;font-weight:800;color:#3b5e10;" id="moneyIn">฿0</div>
           </div>
-          <div class="hub-card">
-            <h4>💸 รายจ่ายเดือนนี้</h4>
-            <table class="hub-table">
-              <tr><th>หมวดหมู่</th><th>จำนวน (฿)</th></tr>
-              <tr><td><input type="text" placeholder="ที่พัก" /></td><td><input type="text" /></td></tr>
-              <tr><td><input type="text" placeholder="อาหาร" /></td><td><input type="text" /></td></tr>
-              <tr><td><input type="text" placeholder="เดินทาง" /></td><td><input type="text" /></td></tr>
-              <tr><td><input type="text" placeholder="อื่นๆ" /></td><td><input type="text" /></td></tr>
-            </table>
+          <div class="hub-card" style="text-align:center;background:#fbdfdf;">
+            <div style="font-size:11px;color:#8a3b58;font-weight:700;margin-bottom:4px;">💸 รายจ่ายรวม</div>
+            <div style="font-size:22px;font-weight:800;color:#8a3b58;" id="moneyOut">฿0</div>
           </div>
-          <div class="hub-card">
-            <h4>🏦 เป้าหมายการออม</h4>
-            <div class="hub-progress-row"><span>ออมสะสม</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#ddeef1;"></div></div><span>0%</span></div>
-            <input type="text" placeholder="เป้าหมาย ฿..." style="margin-top:8px;" />
-            <textarea style="margin-top:8px;height:50px;" placeholder="แผนการออม / โน้ต..."></textarea>
+          <div class="hub-card" style="text-align:center;background:#ddeef1;">
+            <div style="font-size:11px;color:#1a5e70;font-weight:700;margin-bottom:4px;">💰 คงเหลือ</div>
+            <div style="font-size:22px;font-weight:800;color:#1a5e70;" id="moneySave">฿0</div>
           </div>
         </div>
-        <div class="hub-card">
-          <h4>📈 สรุปการเงิน</h4>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
-            <div><div style="font-size:20px;font-weight:700;color:#3b5e10;" id="moneyIn">฿0</div><div style="font-size:11px;color:var(--muted);">รายรับรวม</div></div>
-            <div><div style="font-size:20px;font-weight:700;color:#8a3b58;" id="moneyOut">฿0</div><div style="font-size:11px;color:var(--muted);">รายจ่ายรวม</div></div>
-            <div><div style="font-size:20px;font-weight:700;color:#1a5e70;" id="moneySave">฿0</div><div style="font-size:11px;color:var(--muted);">คงเหลือ</div></div>
+
+        <div class="hub-grid">
+          <!-- รายรับ -->
+          <div class="hub-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <h4 style="margin:0;">💵 รายรับเดือนนี้</h4>
+              <button onclick="addIncomeRow()" style="background:#e6f1da;border:1.5px solid #b4d8a0;color:#3b5e10;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;cursor:pointer;">＋ เพิ่ม</button>
+            </div>
+            <table class="hub-table" style="width:100%;">
+              <thead><tr><th>แหล่งรายได้</th><th>จำนวน (฿)</th><th style="width:24px;"></th></tr></thead>
+              <tbody id="incomeRows">
+                <tr>
+                  <td><input type="text" class="income-name" placeholder="เงินเดือน" oninput="calcMoney()" /></td>
+                  <td><input type="number" class="income-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+                  <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="income-name" placeholder="Affiliate" oninput="calcMoney()" /></td>
+                  <td><input type="number" class="income-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+                  <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top:8px;text-align:right;font-size:13px;font-weight:700;color:#3b5e10;">รวม: <span id="incomeTotalSmall">฿0</span></div>
+          </div>
+
+          <!-- รายจ่าย -->
+          <div class="hub-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <h4 style="margin:0;">💸 รายจ่ายเดือนนี้</h4>
+              <button onclick="addExpenseRow()" style="background:#fbdfdf;border:1.5px solid #f4c0c0;color:#8a3b58;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;cursor:pointer;">＋ เพิ่ม</button>
+            </div>
+            <table class="hub-table" style="width:100%;">
+              <thead><tr><th>หมวดหมู่</th><th>จำนวน (฿)</th><th style="width:24px;"></th></tr></thead>
+              <tbody id="expenseRows">
+                <tr>
+                  <td><input type="text" class="expense-name" placeholder="ที่พัก" oninput="calcMoney()" /></td>
+                  <td><input type="number" class="expense-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+                  <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="expense-name" placeholder="อาหาร" oninput="calcMoney()" /></td>
+                  <td><input type="number" class="expense-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+                  <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="expense-name" placeholder="เดินทาง" oninput="calcMoney()" /></td>
+                  <td><input type="number" class="expense-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+                  <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top:8px;text-align:right;font-size:13px;font-weight:700;color:#8a3b58;">รวม: <span id="expenseTotalSmall">฿0</span></div>
+          </div>
+
+          <!-- ออม -->
+          <div class="hub-card">
+            <h4>🏦 เป้าหมายการออม</h4>
+            <div style="margin-top:8px;">
+              <label style="font-size:11px;font-weight:700;color:var(--muted);">เป้าหมาย (฿)</label>
+              <input type="number" id="savingGoal" placeholder="เช่น 5000" oninput="calcMoney()" style="margin-top:4px;width:100%;" />
+            </div>
+            <div style="margin-top:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+                <span>ออมได้จากเดือนนี้</span>
+                <span id="savingPct" style="font-weight:700;">0%</span>
+              </div>
+              <div class="hub-bar"><div class="hub-bar-fill" id="savingBar" style="width:0%;background:#ddeef1;transition:width .4s;"></div></div>
+              <div style="margin-top:6px;font-size:13px;font-weight:700;color:#1a5e70;">คาดว่าออมได้: <span id="savingAmt">฿0</span></div>
+            </div>
+            <textarea style="margin-top:10px;height:60px;width:100%;" placeholder="แผนการออม / โน้ต..."></textarea>
+          </div>
+        </div>
+
+        <!-- แถบความสมดุล -->
+        <div class="hub-card" style="margin-top:4px;">
+          <h4 style="margin-bottom:10px;">📊 สัดส่วนการใช้จ่าย</h4>
+          <div style="display:flex;height:18px;border-radius:10px;overflow:hidden;background:#f0ebe5;">
+            <div id="barIncome" style="background:#b4d8a0;transition:width .4s;" title="รายรับ"></div>
+            <div id="barExpense" style="background:#f4a0a0;transition:width .4s;" title="รายจ่าย"></div>
+            <div id="barSaving" style="background:#a0c8d8;transition:width .4s;" title="ออม"></div>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:8px;font-size:11px;flex-wrap:wrap;">
+            <span style="color:#3b5e10;">🟢 รายรับ <b id="pctIncome">0%</b></span>
+            <span style="color:#8a3b58;">🔴 รายจ่าย <b id="pctExpense">0%</b></span>
+            <span style="color:#1a5e70;">🔵 คงเหลือ <b id="pctSaving">0%</b></span>
           </div>
         </div>
       </div>
@@ -1580,6 +1649,81 @@ function switchHub(name) {
   const panel = document.getElementById('hub-' + name);
   const btn = document.querySelector('.btn-' + name);
   if (panel) { panel.classList.toggle('open'); if (panel.classList.contains('open') && btn) btn.classList.add('active'); }
+  if (name === 'money') calcMoney();
+}
+
+function fmt(n) { return '฿' + n.toLocaleString('th-TH', {minimumFractionDigits:0, maximumFractionDigits:0}); }
+
+function calcMoney() {
+  const incomeAmts = [...document.querySelectorAll('#incomeRows .income-amt')].map(i => parseFloat(i.value) || 0);
+  const expenseAmts = [...document.querySelectorAll('#expenseRows .expense-amt')].map(i => parseFloat(i.value) || 0);
+  const totalIn = incomeAmts.reduce((a, b) => a + b, 0);
+  const totalOut = expenseAmts.reduce((a, b) => a + b, 0);
+  const remain = totalIn - totalOut;
+  const goal = parseFloat(document.getElementById('savingGoal')?.value) || 0;
+  const savingPct = goal > 0 ? Math.min(Math.round(remain / goal * 100), 100) : (totalIn > 0 ? Math.round(remain / totalIn * 100) : 0);
+
+  // top summary
+  document.getElementById('moneyIn').textContent = fmt(totalIn);
+  document.getElementById('moneyOut').textContent = fmt(totalOut);
+  document.getElementById('moneySave').textContent = fmt(remain);
+  document.getElementById('moneySave').style.color = remain >= 0 ? '#1a5e70' : '#c0392b';
+
+  // small totals inside cards
+  const iSmall = document.getElementById('incomeTotalSmall');
+  const eSmall = document.getElementById('expenseTotalSmall');
+  if (iSmall) iSmall.textContent = fmt(totalIn);
+  if (eSmall) eSmall.textContent = fmt(totalOut);
+
+  // saving bar
+  const savingBarEl = document.getElementById('savingBar');
+  const savingPctEl = document.getElementById('savingPct');
+  const savingAmtEl = document.getElementById('savingAmt');
+  if (savingBarEl) savingBarEl.style.width = Math.max(0, savingPct) + '%';
+  if (savingPctEl) savingPctEl.textContent = savingPct + '%';
+  if (savingAmtEl) savingAmtEl.textContent = fmt(remain);
+
+  // proportion bar
+  if (totalIn > 0) {
+    const pOut = Math.round(totalOut / totalIn * 100);
+    const pRemain = Math.max(0, 100 - pOut);
+    document.getElementById('barIncome').style.width = '100%';
+    document.getElementById('barExpense').style.width = pOut + '%';
+    document.getElementById('barSaving').style.width = pRemain + '%';
+    document.getElementById('pctIncome').textContent = '100%';
+    document.getElementById('pctExpense').textContent = pOut + '%';
+    document.getElementById('pctSaving').textContent = pRemain + '%';
+    // recolor bar proportionally
+    document.getElementById('barIncome').style.width = '0%';
+    document.getElementById('barExpense').style.width = pOut + '%';
+    document.getElementById('barSaving').style.width = pRemain + '%';
+  } else {
+    ['barIncome','barExpense','barSaving'].forEach(id => document.getElementById(id).style.width = '0%');
+    ['pctIncome','pctExpense','pctSaving'].forEach(id => document.getElementById(id).textContent = '0%');
+  }
+}
+
+function addIncomeRow() {
+  const tbody = document.getElementById('incomeRows');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input type="text" class="income-name" placeholder="รายรับอื่นๆ" oninput="calcMoney()" /></td>
+    <td><input type="number" class="income-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+    <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function addExpenseRow() {
+  const tbody = document.getElementById('expenseRows');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input type="text" class="expense-name" placeholder="ค่าใช้จ่ายอื่นๆ" oninput="calcMoney()" /></td>
+    <td><input type="number" class="expense-amt" placeholder="0" oninput="calcMoney()" style="text-align:right;" /></td>
+    <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function removeRow(btn) {
+  const tr = btn.closest('tr');
+  if (tr) { tr.remove(); calcMoney(); }
 }
 
 renderCalendar();
