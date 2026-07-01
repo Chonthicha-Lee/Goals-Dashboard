@@ -311,15 +311,15 @@
         <div class="hub-grid">
           <div class="hub-card">
             <h4>🌟 เป้าหมายระยะสั้น (เดือนนี้)</h4>
-            <textarea placeholder="เช่น สร้าง Success Case แรก, พัฒนาทักษะ Presentation..."></textarea>
+            <textarea data-hs="goals-short" placeholder="เช่น สร้าง Success Case แรก, พัฒนาทักษะ Presentation..."></textarea>
           </div>
           <div class="hub-card">
             <h4>🚀 เป้าหมายระยะยาว (3 ปี)</h4>
-            <textarea placeholder="เช่น เป็น Manager, ย้ายบริษัทระดับโลก..."></textarea>
+            <textarea data-hs="goals-long" placeholder="เช่น เป็น Manager, ย้ายบริษัทระดับโลก..."></textarea>
           </div>
           <div class="hub-card">
             <h4>💭 Vision Board / แรงบันดาลใจ</h4>
-            <textarea placeholder="สิ่งที่อยากเป็น อยากมี อยากทำ..."></textarea>
+            <textarea data-hs="goals-vision" placeholder="สิ่งที่อยากเป็น อยากมี อยากทำ..."></textarea>
           </div>
         </div>
         <div class="hub-card">
@@ -341,28 +341,28 @@
             <h4>📁 Project ที่รับผิดชอบ</h4>
             <table class="hub-table">
               <tr><th>Project</th><th>สถานะ</th><th>Deadline</th></tr>
-              <tr><td><input type="text" placeholder="ชื่อ Project" /></td><td><input type="text" placeholder="กำลังทำ" /></td><td><input type="text" placeholder="วันที่" /></td></tr>
-              <tr><td><input type="text" placeholder="ชื่อ Project" /></td><td><input type="text" placeholder="รอ Feedback" /></td><td><input type="text" placeholder="วันที่" /></td></tr>
-              <tr><td><input type="text" placeholder="ชื่อ Project" /></td><td><input type="text" placeholder="" /></td><td><input type="text" placeholder="วันที่" /></td></tr>
+              <tr><td><input type="text" data-hs="work-p1-name" placeholder="ชื่อ Project" /></td><td><input type="text" data-hs="work-p1-status" placeholder="กำลังทำ" /></td><td><input type="text" data-hs="work-p1-dl" placeholder="วันที่" /></td></tr>
+              <tr><td><input type="text" data-hs="work-p2-name" placeholder="ชื่อ Project" /></td><td><input type="text" data-hs="work-p2-status" placeholder="รอ Feedback" /></td><td><input type="text" data-hs="work-p2-dl" placeholder="วันที่" /></td></tr>
+              <tr><td><input type="text" data-hs="work-p3-name" placeholder="ชื่อ Project" /></td><td><input type="text" data-hs="work-p3-status" placeholder="" /></td><td><input type="text" data-hs="work-p3-dl" placeholder="วันที่" /></td></tr>
             </table>
           </div>
           <div class="hub-card">
             <h4>✅ งานที่ต้องทำวันนี้</h4>
-            <textarea placeholder="1. &#10;2. &#10;3. &#10;4."></textarea>
+            <textarea data-hs="work-today" placeholder="1. &#10;2. &#10;3. &#10;4."></textarea>
           </div>
         </div>
         <div class="hub-grid">
           <div class="hub-card">
             <h4>🤝 นัดหมาย / ประชุม</h4>
-            <textarea placeholder="เช่น 10:00 ประชุมทีม..."></textarea>
+            <textarea data-hs="work-meeting" placeholder="เช่น 10:00 ประชุมทีม..."></textarea>
           </div>
           <div class="hub-card">
             <h4>📝 Feedback จากหัวหน้า</h4>
-            <textarea placeholder="บันทึก feedback ที่ได้รับ..."></textarea>
+            <textarea data-hs="work-feedback" placeholder="บันทึก feedback ที่ได้รับ..."></textarea>
           </div>
           <div class="hub-card">
             <h4>💡 ไอเดีย / สิ่งที่เรียนรู้</h4>
-            <textarea placeholder="สิ่งที่ได้เรียนรู้วันนี้..."></textarea>
+            <textarea data-hs="work-idea" placeholder="สิ่งที่ได้เรียนรู้วันนี้..."></textarea>
           </div>
         </div>
         <div style="margin-top:12px;text-align:center;">
@@ -624,14 +624,14 @@
             <h4>📅 ตารางโพสต์ (สัปดาห์นี้)</h4>
             <table class="hub-table">
               <tr><th>วัน</th><th>หัวข้อ</th><th>Platform</th><th>สถานะ</th></tr>
-              <tr><td>จ.</td><td><input type="text" /></td><td><input type="text" placeholder="IG/TT" /></td><td><span class="hub-badge badge-amber">แพลน</span></td></tr>
-              <tr><td>พ.</td><td><input type="text" /></td><td><input type="text" placeholder="IG/TT" /></td><td><span class="hub-badge badge-pink">ทำอยู่</span></td></tr>
-              <tr><td>ศ.</td><td><input type="text" /></td><td><input type="text" placeholder="IG/TT" /></td><td><span class="hub-badge badge-green">โพสต์แล้ว</span></td></tr>
+              <tr><td>จ.</td><td><input type="text" data-hs="cnt-mon-topic" /></td><td><input type="text" data-hs="cnt-mon-plat" placeholder="IG/TT" /></td><td><span class="hub-badge badge-amber">แพลน</span></td></tr>
+              <tr><td>พ.</td><td><input type="text" data-hs="cnt-wed-topic" /></td><td><input type="text" data-hs="cnt-wed-plat" placeholder="IG/TT" /></td><td><span class="hub-badge badge-pink">ทำอยู่</span></td></tr>
+              <tr><td>ศ.</td><td><input type="text" data-hs="cnt-fri-topic" /></td><td><input type="text" data-hs="cnt-fri-plat" placeholder="IG/TT" /></td><td><span class="hub-badge badge-green">โพสต์แล้ว</span></td></tr>
             </table>
           </div>
           <div class="hub-card">
             <h4>💡 ไอเดีย Content</h4>
-            <textarea placeholder="หัวข้อที่อยากทำ..."></textarea>
+            <textarea data-hs="cnt-idea" placeholder="หัวข้อที่อยากทำ..."></textarea>
           </div>
         </div>
         <div class="hub-grid">
@@ -639,15 +639,15 @@
             <h4>🔗 Affiliate Links & Products</h4>
             <table class="hub-table">
               <tr><th>สินค้า</th><th>Platform</th><th>Commission</th></tr>
-              <tr><td><input type="text" placeholder="ชื่อสินค้า" /></td><td><input type="text" placeholder="Shopee/Amazon" /></td><td><input type="text" placeholder="%" /></td></tr>
-              <tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="text" /></td></tr>
+              <tr><td><input type="text" data-hs="cnt-aff1-name" placeholder="ชื่อสินค้า" /></td><td><input type="text" data-hs="cnt-aff1-plat" placeholder="Shopee/Amazon" /></td><td><input type="text" data-hs="cnt-aff1-com" placeholder="%" /></td></tr>
+              <tr><td><input type="text" data-hs="cnt-aff2-name" /></td><td><input type="text" data-hs="cnt-aff2-plat" /></td><td><input type="text" data-hs="cnt-aff2-com" /></td></tr>
             </table>
           </div>
           <div class="hub-card">
             <h4>📊 Stats เดือนนี้</h4>
-            <div class="hub-progress-row"><span>Followers growth</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#e6f1da;"></div></div><input type="text" style="width:50px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="%" /></div>
-            <div class="hub-progress-row"><span>รายได้ Affiliate</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#ddeef1;"></div></div><input type="text" style="width:60px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="฿" /></div>
-            <div class="hub-progress-row"><span>ยอด Engagement</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#fbe2e8;"></div></div><input type="text" style="width:50px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="%" /></div>
+            <div class="hub-progress-row"><span>Followers growth</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#e6f1da;"></div></div><input type="text" data-hs="cnt-stat-follow" style="width:50px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="%" /></div>
+            <div class="hub-progress-row"><span>รายได้ Affiliate</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#ddeef1;"></div></div><input type="text" data-hs="cnt-stat-income" style="width:60px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="฿" /></div>
+            <div class="hub-progress-row"><span>ยอด Engagement</span><div class="hub-bar"><div class="hub-bar-fill" style="width:0%;background:#fbe2e8;"></div></div><input type="text" data-hs="cnt-stat-engage" style="width:50px;border:none;font-size:11px;border-bottom:1px solid var(--border);" placeholder="%" /></div>
           </div>
         </div>
       </div>
@@ -733,7 +733,7 @@
             <h4>🏦 เป้าหมายการออม</h4>
             <div style="margin-top:8px;">
               <label style="font-size:11px;font-weight:700;color:var(--muted);">เป้าหมาย (฿)</label>
-              <input type="number" id="savingGoal" placeholder="เช่น 5000" oninput="calcMoney()" style="margin-top:4px;width:100%;" />
+              <input type="number" id="savingGoal" data-hs="money-saving-goal" placeholder="เช่น 5000" oninput="calcMoney()" style="margin-top:4px;width:100%;" />
             </div>
             <div style="margin-top:10px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
@@ -743,7 +743,7 @@
               <div class="hub-bar"><div class="hub-bar-fill" id="savingBar" style="width:0%;background:#ddeef1;transition:width .4s;"></div></div>
               <div style="margin-top:6px;font-size:13px;font-weight:700;color:#1a5e70;">คาดว่าออมได้: <span id="savingAmt">฿0</span></div>
             </div>
-            <textarea style="margin-top:10px;height:60px;width:100%;" placeholder="แผนการออม / โน้ต..."></textarea>
+            <textarea data-hs="money-saving-note" style="margin-top:10px;height:60px;width:100%;" placeholder="แผนการออม / โน้ต..."></textarea>
           </div>
         </div>
 
@@ -1726,8 +1726,100 @@ function removeRow(btn) {
   if (tr) { tr.remove(); calcMoney(); }
 }
 
+// ── HUB DATA SAVE/LOAD ──────────────────────────────────────────
+const HUB_KEY = 'hub_fields_v1';
+let hubSaveTimer = null;
+
+function collectHubData() {
+  const data = {};
+  // static inputs/textareas with data-hs
+  document.querySelectorAll('[data-hs]').forEach(el => {
+    data[el.dataset.hs] = el.value;
+  });
+  // dynamic money income rows
+  data['money-income-rows'] = [...document.querySelectorAll('#incomeRows tr')].map(tr => ({
+    name: tr.querySelector('.income-name')?.value || '',
+    amt:  tr.querySelector('.income-amt')?.value  || ''
+  }));
+  // dynamic money expense rows
+  data['money-expense-rows'] = [...document.querySelectorAll('#expenseRows tr')].map(tr => ({
+    name: tr.querySelector('.expense-name')?.value || '',
+    amt:  tr.querySelector('.expense-amt')?.value  || ''
+  }));
+  return data;
+}
+
+function saveHubData() {
+  const data = collectHubData();
+  localStorage.setItem(HUB_KEY, JSON.stringify(data));
+  if (sb) {
+    setSyncBadge('syncing');
+    sb.from('app_storage').upsert({ key: HUB_KEY, value: data, updated_at: new Date().toISOString() })
+      .then(({ error }) => setSyncBadge(error ? 'error' : 'synced'));
+  }
+}
+
+function debounceSaveHub() {
+  clearTimeout(hubSaveTimer);
+  hubSaveTimer = setTimeout(saveHubData, 800);
+}
+
+function buildMoneyRow(tbody, cls, name, amt) {
+  const isIncome = cls === 'income';
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" class="${cls}-name" placeholder="${isIncome ? 'รายรับ...' : 'ค่าใช้จ่าย...'}" value="${name}" oninput="calcMoney()" /></td>
+    <td><input type="number" class="${cls}-amt" placeholder="0" value="${amt}" oninput="calcMoney()" style="text-align:right;" /></td>
+    <td><button onclick="removeRow(this)" style="background:none;border:none;cursor:pointer;color:#c0392b;font-size:13px;">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function restoreHubData(data) {
+  if (!data) return;
+  // static fields
+  document.querySelectorAll('[data-hs]').forEach(el => {
+    if (data[el.dataset.hs] !== undefined) el.value = data[el.dataset.hs];
+  });
+  // income rows
+  if (Array.isArray(data['money-income-rows']) && data['money-income-rows'].length) {
+    const tbody = document.getElementById('incomeRows');
+    tbody.innerHTML = '';
+    data['money-income-rows'].forEach(r => buildMoneyRow(tbody, 'income', r.name, r.amt));
+  }
+  // expense rows
+  if (Array.isArray(data['money-expense-rows']) && data['money-expense-rows'].length) {
+    const tbody = document.getElementById('expenseRows');
+    tbody.innerHTML = '';
+    data['money-expense-rows'].forEach(r => buildMoneyRow(tbody, 'expense', r.name, r.amt));
+  }
+  calcMoney();
+}
+
+async function loadHubData() {
+  // local first
+  try {
+    const local = JSON.parse(localStorage.getItem(HUB_KEY) || 'null');
+    if (local) restoreHubData(local);
+  } catch(e) {}
+  // then cloud
+  if (!sb) return;
+  const { data, error } = await sb.from('app_storage').select('value').eq('key', HUB_KEY).single();
+  if (!error && data?.value) {
+    restoreHubData(data.value);
+    localStorage.setItem(HUB_KEY, JSON.stringify(data.value));
+  }
+}
+
+// attach save listener to all hub panels (static + future dynamic)
+document.querySelectorAll('.hub-panel').forEach(panel => {
+  panel.addEventListener('input', debounceSaveHub);
+  panel.addEventListener('change', debounceSaveHub);
+});
+
+// ────────────────────────────────────────────────────────────────
 renderCalendar();
 loadCloudData();
+loadHubData();
 </script>
 </body>
 </html>
